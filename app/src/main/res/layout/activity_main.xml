@@ -1,0 +1,311 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--tools:context="com.example.henryqi_code.micropxiaomiuuuu.MainActivity">-->
+
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/colorPrimary"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
+
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <!--<include layout="@layout/content_main" />-->
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--android:src="@android:drawable/ic_dialog_email" />-->
+
+<!--</android.support.design.widget.CoordinatorLayout>-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    >
+
+    <!--Top text: STM32F4 I/O Controller-->
+    <TextView
+        android:id="@+id/title0"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center_horizontal"
+
+        android:text="STM32F4 I/O Controller"
+        android:textSize="60px"
+        android:textStyle="bold"
+        />
+    <!-- empty line after Title-->
+    <TextView
+        android:id="@+id/emptyLineTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     "
+        android:textSize="40px"
+        android:layout_below="@+id/title0"
+        />
+
+    <!--Temperature-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emptyLineTitle"
+        android:id="@+id/temperature"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:editable="false"
+
+            android:text="TEMP: "
+            android:textSize="60px"
+            android:textColor="@color/Dark"
+            android:textStyle="bold"
+            android:id="@+id/tempText"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:text="Testing"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/tempBox"
+            />
+    </LinearLayout>
+    <!-- empty line after temper-->
+    <TextView
+        android:id="@+id/emptyLineTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     "
+        android:textSize="40px"
+        android:layout_below="@+id/temperature"
+        />
+
+    <!-- Pitch-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:editable="false"
+        android:layout_below="@+id/emptyLineTemp"
+        android:id="@+id/pitch"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:editable="false"
+
+            android:text="PITCH: "
+            android:textSize="60px"
+            android:textColor="@color/Dark"
+            android:textStyle="bold"
+            android:id="@+id/pitchText"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:text="Testing"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/pitchBox"
+            />
+    </LinearLayout>
+    <!-- empty line after pitch-->
+    <TextView
+        android:id="@+id/emptyLinePitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     "
+        android:textSize="40px"
+        android:layout_below="@+id/pitch"
+        />
+
+    <!-- Roll-->
+    <LinearLayout
+        android:id="@+id/roll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:editable="false"
+        android:layout_below="@+id/emptyLinePitch"
+        >
+        <TextView
+            android:id="@+id/rollText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:editable="false"
+
+            android:text="ROLL: "
+            android:textSize="60px"
+            android:textColor="@color/Dark"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/rollBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:text="Testing"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            />
+    </LinearLayout>
+    <!--2 empty lines after Roll-->
+    <TextView
+        android:id="@+id/emptyLineRoll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     "
+        android:textSize="40px"
+        android:layout_below="@+id/emptyLineRoll"
+        />
+    <TextView
+        android:id="@+id/emptyLineRoll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     "
+        android:textSize="40px"
+        android:layout_below="@+id/roll"
+        />
+
+
+    <!-- LED Section begins-->
+
+    <!-- "LED Section" Text-->
+    <TextView
+        android:id="@+id/ledText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emptyLineRoll1"
+
+        android:text="LED Section"
+        android:textSize="60px"
+        android:textStyle="bold"
+        />
+
+    <!-- LED ON/OFF button-->
+    <Button
+        android:id="@+id/onOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ON/OFF"
+        android:layout_below="@+id/ledText"
+        />
+
+    <!-- empty line above intensity-->
+    <TextView
+        android:id="@+id/emptyLineInten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     "
+        android:textSize="40px"
+        android:layout_above="@+id/intensityText"
+        />
+    <!-- LED intensity slider -->
+    <TextView
+        android:id="@+id/intensityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Intensity(PWM)"
+        android:textSize="40px"
+        android:textStyle="bold|italic"
+        android:layout_above="@+id/intensityBar"
+        />
+    <SeekBar
+        android:id="@+id/intensityBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max = "1000"
+        android:layout_above="@+id/intenBarValueLeft"
+        />
+    <TextView
+        android:id="@+id/intenBarValueLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="light"
+        android:layout_above="@+id/emptyLineSpeed"
+        android:layout_alignParentLeft="true"
+        />
+    <TextView
+        android:id="@+id/intensityCurr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/intensityBar"
+        />
+    <TextView
+        android:id="@+id/intenBarValueRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="strong"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/emptyLineSpeed"
+        />
+
+    <!-- empty line above speed/direction-->
+    <TextView
+        android:id="@+id/emptyLineSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     "
+        android:textSize="40px"
+        android:layout_above="@+id/speedText"
+        />
+    <!-- LED speed/direction slider-->
+    <TextView
+        android:id="@+id/speedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Speed/Direction"
+        android:textStyle="italic|bold"
+        android:textSize="40px"
+        android:layout_above="@+id/speedBar"
+        />
+    <SeekBar
+        android:id="@+id/speedBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/speedBarValueLeft"
+        android:max="20"
+        />
+    <TextView
+        android:id="@+id/speedBarValueLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:text="-10"
+        />
+    <TextView
+        android:id="@+id/speedCurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/speedBar"
+        />
+    <TextView
+        android:id="@+id/speedBarValueRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="10"
+        />
+
+</RelativeLayout>
