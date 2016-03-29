@@ -39,14 +39,15 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Delayed;
 
 public class MainActivity extends AppCompatActivity {
 
     //UI Section
     private SeekBar speedBar, intensityBar;
-    private TextView speedBarValue, intensityBarValue,bleBtnText;
-    private Button bleBtn;
+    private TextView speedBarValue, intensityBarValue,bleBtnText,testText;
+    private Button bleBtn,closeConnBtn;
     private int blScanStage;
 
     private BluetoothAdapter mBtAdapter;
@@ -54,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
     private BluetoothGatt mGatt;
 
     private int REQ_ENABLE_BT = 1;
+    private boolean isClosed = false; // flag to make sure pairing only starts via button press
+    //UUID for 2 Services:
+    public static String ORIENTATION_SERVICE = "42821a40-e477-11e2-82d0-0002a5d5c51b";
+    public static String SAMPLE_SERVICE = "02366e80-cf3a-11e1-9ab4-0002a5d5c51b";
+    //UUID for 4 characteristics:
+    public static String TEST_BUTTON = "e23e78a0-cf4a-11e1-8ffc-0002a5d5c51b"; //Free Fall
+    public static String TEMP_MEASUREMENT = "";
+    public static String PITCH_MEASUREMENT = "cd20c480-e48b-11e2-840b0002a5d5c51b";
+    public static String ROLL_MEASUREMENT = "01c50b60-e48c-11e2-a073-0002a5d5c51b";
+
 //    private Handler mHandler;
 //    private static  final long SCAN_PERIOD = 10000; // 10 sec
 //    private BluetoothLeScanner mLEScanner;
@@ -131,22 +142,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        //step 1: enable Bt if not:
-        if( mBtAdapter == null || !mBtAdapter.isEnabled() ){
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE );
-            startActivityForResult(enableBtIntent, REQ_ENABLE_BT);
-        }else {
-            //step 2: scanning
+            //step 2: scanning on click
             bleBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    //check if Bt is enabled, prompt the user if not
+                    if( mBtAdapter == null || !mBtAdapter.isEnabled() ){
+                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE );
+                        startActivityForResult(enableBtIntent, REQ_ENABLE_BT);
+                    }
+                    isClosed = false;
                     blScanStage = 1;
                     bleBtn.setText(btnTextUpdate(blScanStage)); // "SEARCHING FOR DEVICE..."
-                    //step 2: find the BLE Device(nucleo ADDR:03:80:E1:00:34:12 )
+                    //step 2: find the BLE Device(nucleo ADDR:03:80:E1:00:34:08 )
                     scanLeDevice(true);
                 }
             });
+            closeConnBtn.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    close();
+                    blScanStage = 0;
+                    bleBtn.setText(btnTextUpdate(blScanStage));
+                    bleBtnText.setText("");
+                    testText.setText("waiting...");
+                }
+            });
         }
-    }
     @Override
     protected void onPause(){
         super.onPause();
@@ -174,6 +194,11 @@ public class MainActivity extends AppCompatActivity {
 
         bleBtn = (Button) findViewById(R.id.bleBtn);
         bleBtnText = (TextView)findViewById(R.id.bleBtnText);
+
+        closeConnBtn = (Button)findViewById(R.id.closeConnBtn);
+
+        testText = (TextView)findViewById(R.id.userBtnTest);
+        testText.setText("waiting..");
     }
 
     /**
@@ -205,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
 
     //scanning method
     private void scanLeDevice(final boolean enable){
-        if(enable){
+        if(enable && !isClosed){
             mBtAdapter.startLeScan(mLeScanCallback);
         }else{
             mBtAdapter.stopLeScan(mLeScanCallback);
@@ -221,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             blScanStage = 2;
                             bleBtn.setText(btnTextUpdate(blScanStage));//"found! pairing..."
+                            if(device.toString().equals("03:80:E1:00:34:08"))
                             connToGatt(device);
                         }
                     });
@@ -229,14 +255,15 @@ public class MainActivity extends AppCompatActivity {
     /** Gatt methods: **/
     //connect to Gatt of the Device:
     public void connToGatt(BluetoothDevice device){
-        if(mGatt == null){
+        if(mGatt == null && !isClosed){
             mGatt = device.connectGatt(this,false,gattCallback);
 
             blScanStage = 3;
             bleBtn.setText(btnTextUpdate(blScanStage)); // connected!
 
             bleBtnText.setText(device.toString()); // print MAC address of the device
-           // scanLeDevice(false); // stop on finding the device.
+            //scanLeDevice(false); // stop on finding the device.
+//            onServiceDiscovered(gatt);
         }
     }
     //Gatt call back method
@@ -246,10 +273,42 @@ public class MainActivity extends AppCompatActivity {
             switch(newState){
                 case BluetoothProfile.STATE_CONNECTED:
                     gatt.discoverServices();
+                    onServiceDiscovered(gatt);
                     break;
             }
         }
     };
+
+    public void onServiceDiscovered(BluetoothGatt gatt){
+        BluetoothGattService sampleService;
+        BluetoothGattCharacteristic btnChar;
+        List<BluetoothGattCharacteristic> sampleServiceChar;
+        List<BluetoothGattService> services = gatt.getServices();
+        String btnValue;
+        for(int i = 0; i < services.size(); i++) {
+            if (services.get(i).getUuid().toString().equals(SAMPLE_SERVICE)){
+                sampleService = services.get(i);
+                sampleServiceChar = sampleService.getCharacteristics();
+                for(int j = 0; j < sampleServiceChar.size();j++){
+                    while(sampleServiceChar.get(i).getUuid().toString().equals(TEST_BUTTON)){
+                        btnChar = sampleServiceChar.get(i);
+                        btnValue = new String(btnChar.getValue()); // btnChar.getValue()-> byte[]
+                        testText.setText(btnValue);     //update the UI's testText
+                    }
+                }
+            }
+        }
+    }
+
+    public void close(){
+        if(mGatt == null){
+            return;
+        }
+        isClosed = true;
+        mGatt.close();
+        mBtAdapter.disable();
+        mGatt = null;
+    }
 
     /*
     Google System-Defined APIs
