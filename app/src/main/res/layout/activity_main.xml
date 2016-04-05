@@ -51,7 +51,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="Testing"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:id="@+id/tempBox"
             />
@@ -78,7 +77,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:editable="false"
-
             android:text="PITCH: "
             android:textSize="60px"
             android:textColor="@color/Dark"
@@ -89,7 +87,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="Testing"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:id="@+id/pitchBox"
             />
@@ -193,7 +190,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/emptyLineRoll1"
-
         android:text="LED Section"
         android:textSize="60px"
         android:textStyle="bold"
@@ -206,7 +202,7 @@
         android:layout_height="wrap_content"
         android:text="ON/OFF"
         android:layout_below="@+id/ledText"
-        />
+        android:layout_above="@+id/emptyLineInten" />
 
     <!-- empty line above intensity-->
     <TextView

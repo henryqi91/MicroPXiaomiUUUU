@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     public static String UUID_SAMPLE_SERVICE = "02366e80-cf3a-11e1-9ab4-0002a5d5c51b";
     //UUID for 4 characteristics:
     public static String UUID_TEST_BUTTON = "e23e78a0-cf4a-11e1-8ffc-0002a5d5c51b"; //Free Fall
-    public static String UUID_TEMP_MEASUREMENT = "";
+    public static String UUID_TEMP_MEASUREMENT = "a32e5520-e477-11e2-a9e3-0002a5d5c51b";
     public static String UUID_PITCH_MEASUREMENT = "cd20c480-e48b-11e2-840b0002a5d5c51b";
     public static String UUID_ROLL_MEASUREMENT = "01c50b60-e48c-11e2-a073-0002a5d5c51b";
 
@@ -316,6 +316,7 @@ public class MainActivity extends AppCompatActivity {
                     mGatt.setCharacteristicNotification(gattCharacteristic, true);
                 }
                 uuid = gattCharacteristic.getUuid().toString();
+                //
                 if(uuid.equals(UUID_ROLL_MEASUREMENT)){
                     rV = gattCharacteristic.getIntValue(0x12,1);
                     rollValueUpdate(rV);
