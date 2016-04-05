@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -127,7 +128,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:text="Testing"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             />
     </LinearLayout>
@@ -149,21 +149,40 @@
         android:layout_below="@+id/roll"
         />
 
-    <!-- "BLE" Connection button -->
-    <!--<-->
-        <!--android:id="@+id/bleBtn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="CONN TO DEVICE"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_below="@+id/title0"-->
-        <!--/>-->
+     <!--"BLE" Connection button-->
+    <Button
+        android:id="@+id/bleBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CONN TO DEVICE"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/title0"
+        />
     <TextView
         android:id="@+id/bleBtnText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/title0"
+        android:layout_below="@+id/bleBtn"
+        />
+
+    <!-- Button input testing area-->
+    <TextView
+        android:id="@+id/userBtnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/bleBtnText"
+        />
+
+    <!--button to turn off the pairing-->
+    <Button
+        android:id="@+id/closeConnBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/userBtnTest"
+        android:text="CLOSE CONNECTION"
         />
 
     <!-- LED Section begins-->

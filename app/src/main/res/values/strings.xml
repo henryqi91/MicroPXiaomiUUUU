@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">MicroP_BLE_Interaction</string>
+    <string name="app_name">BLE_G08</string>
+    <string name="blue_tooth">BLUETOOTH</string>
     <string name="action_settings">Settings</string>
     <string name="temperature">Temperature </string>
+    <string name="Ble_Start_Up">BleStartUp</string>
 </resources>

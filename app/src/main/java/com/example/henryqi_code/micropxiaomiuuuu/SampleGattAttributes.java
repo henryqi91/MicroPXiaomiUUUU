@@ -16,6 +16,8 @@ public class SampleGattAttributes {
     public static String PITCH_MEASUREMENT = "cd20c480-e48b-11e2-840b0002a5d5c51b";
     public static String ROLL_MEASUREMENT = "01c50b60-e48c-11e2-a073-0002a5d5c51b";
 
+    //client Char configuration
+//    public static String CLIENT_CHARACTERISTIC_CONFIG =
     static{
         // Services
         attributes.put(ORIENTATION_SERVICE,"Orientation Service");
