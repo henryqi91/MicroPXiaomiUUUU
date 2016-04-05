@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     //UI Section
     private SeekBar speedBar, intensityBar;
-    private TextView speedBarValue, intensityBarValue,bleBtnText,testText,rollBox,pitchBox,tempBox;
+    private TextView speedBarValue, intensityBarValue,bleBtnText,testText,rollBox
+            ,pitchBox,tempBox;
     private Button bleBtn,closeConnBtn;
     private int blScanStage;
 
@@ -284,37 +285,38 @@ public class MainActivity extends AppCompatActivity {
 
     //Gatt call back method
     private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
+        testText.setText("Watiing for values...");
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status){
-            if(status == BluetoothGatt.GATT_SUCCESS){
+//            if(status == BluetoothGatt.GATT_SUCCESS){
+//            testText.setText("Watiing for values...");
                 List<BluetoothGattService> gattServices = gatt.getServices();
-                while(true) {
-                    updateRollPitchTemp(gattServices);
-                }
-            }
+                updateRollPitchTemp(gattServices);
+//            }
         }
     };
 
     public void updateRollPitchTemp( List<BluetoothGattService> gattServices) {
-        if(gattServices == null) return;
+        //if(gattServices == null) return;
         int rV,pV,tV;
         String uuid = "";
+//        testText.setText("Watiing for values...");
         for (BluetoothGattService gattService : gattServices) {
             List<BluetoothGattCharacteristic> gattCharacteristics =
                     gattService.getCharacteristics();
             for(BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics){
-                final int charaProp = gattCharacteristic.getProperties();
-                if( (charaProp | gattCharacteristic.PROPERTY_READ) > 0){
-                    if(mNotifyCharacteristic != null){
-                        mGatt.setCharacteristicNotification(mNotifyCharacteristic,false);
-                        mNotifyCharacteristic = null;
-                    }
-                    mBtLeService.readCharacteristic(gattCharacteristic);
-                }
-                if( (charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0){
-                    mNotifyCharacteristic = gattCharacteristic;
-                    mGatt.setCharacteristicNotification(gattCharacteristic, true);
-                }
+//                final int charaProp = gattCharacteristic.getProperties();
+//                if( (charaProp | gattCharacteristic.PROPERTY_READ) > 0){
+//                    if(mNotifyCharacteristic != null){
+//                        mGatt.setCharacteristicNotification(mNotifyCharacteristic,false);
+//                        mNotifyCharacteristic = null;
+//                    }
+                mBtLeService.readCharacteristic(gattCharacteristic);
+//                }
+//                if( (charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0){
+//                    mNotifyCharacteristic = gattCharacteristic;
+//                    mGatt.setCharacteristicNotification(gattCharacteristic, true);
+//                }
                 uuid = gattCharacteristic.getUuid().toString();
                 //
                 if(uuid.equals(UUID_ROLL_MEASUREMENT)){
@@ -328,6 +330,11 @@ public class MainActivity extends AppCompatActivity {
                 else if(uuid.equals(UUID_TEMP_MEASUREMENT)){
                     tV = gattCharacteristic.getIntValue(0x12,1);
                     tempValueUpdate(tV);
+                }
+                else{
+                    rollValueUpdate(0);
+                    pitchValueUpdate(0);
+                    tempValueUpdate(0);
                 }
             }
         }
@@ -433,19 +440,19 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     public void rollValueUpdate(int rollValue){
-        rollValue /= 100;
+        //rollValue /= 100;
         String rollText = "" + rollValue;
-        rollBox.setText(rollText);
+        rollBox.setText("100");
     }
     public void pitchValueUpdate(int pitchValue){
-        pitchValue /= 100;
+//        pitchValue /= 100;
         String pitchText = "" + pitchValue;
-        pitchBox.setText(pitchText);
+        pitchBox.setText("100");
     }
     public void tempValueUpdate(int tempValue){
-        tempValue /= 100;
+//        tempValue /= 100;
         String tempText = "" + tempValue;
-        pitchBox.setText(tempText);
+        tempBox.setText("100");
     }
 
     public void close(){
@@ -454,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
         }
         isClosed = true;
         mGatt.close();
-        mBtAdapter.disable();
+        //mBtAdapter.disable();
         mGatt = null;
     }
 
